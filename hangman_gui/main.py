@@ -21,9 +21,15 @@ def printBlanks(blankList):
     for ele in blankList:
         blanks+=ele
     print(blanks)
+    
+# similar to above but returns string
+def to_String(wordList):
+    rtnStr = ""
+    for ele in wordList:
+        rtnStr+=ele
+    return rtnStr
 
-
-# func  to generate blanks 
+# func to generate blanks 
 def generateBlanks(word):
     blank = [char for char in word]
     for index in range(0, len(blank)):
@@ -41,17 +47,27 @@ def searchWord(word, letter):
             loc.append(index)
     return loc
 
+# func that only shows corrected word with correctly guessed letter 
+def displayChange(word, lttr):
+    wordAsList = [char for char in word]
+    for index in range(0, len(wordAsList)):
+        if wordAsList[index] == lttr:
+            continue
+        else:
+            wordAsList[index] = "_ "
+    return wordAsList
+
 # func to start the game
 def playGame():
     
-    #create number of wrong answers
+    #create number of allowed wrong answers
     wrgAns = 6
     
     #create list of wrong guessed letters
     wrong = []
     
     #pick a word from the list and save it
-    startWord = pickWord()
+    startWord = pickWord().lower()
     
     #create underscores for blanks
     blanksList = generateBlanks(startWord)
@@ -69,6 +85,8 @@ def playGame():
         
         #ask user for letter
         userGuess = input("Guess a letter: ")
+        
+        # if correct, return index of letter in word
         indexOfLetter = searchWord(startWord, userGuess)
         
         # check to see if it is correct
@@ -81,6 +99,8 @@ def playGame():
             print('\nwrong\n')
             wrong.append(userGuess)
             wrgAns-=1
+        crrtedWord = displayChange(startWord, userGuess)
+        print(crrtedWord)
 
 
 playGame()
